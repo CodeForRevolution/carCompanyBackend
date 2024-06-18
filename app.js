@@ -19,6 +19,10 @@ const errormiddleware=require("./backend/middleware/error")
 app.get('/',(req,res,next)=>{
   res.send("<h1>Yahooo you will get well Soon Dr Khan's Clinics<h1/>")
 })
+app.post('/enquiry',(req,res,next)=>{
+  console.log("your enquiryData",req.body)
+  res.send("<h1>Yahooo you will get well Soon Dr Khan's Clinics<h1/>")
+})
 app.use("/api/v1/",require("./backend/Route/userRoute"));// directing route to user Route
 app.use("/api/v1/",require("./backend/Route/SurveyRoute"));// directing  route to surveyRoute
 app.use("/api/v1/",require("./backend/Route/PatientRoute"));// directing  route to surveyRoute
@@ -30,6 +34,7 @@ app.use("/api/v1/",require("./backend/Route/ImageRoute"));// directing  route to
 app.use("/api/v1/",require("./backend/Route/aboutRoute"));// directing  route to surveyRoute
 app.use("/api/v1/",require("./backend/Route/serviceRoute"));// directing  route to surveyRoute
 app.use("/api/v1/",require("./backend/Route/questionRoute"));// directing  route to surveyRoute
+app.use("/api/v1/",require("./backend/Route/notification"));// directing  route to surveyRoute
 //middleware for the Error
 app.use(errormiddleware);
 module.exports=app;

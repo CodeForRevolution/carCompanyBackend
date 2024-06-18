@@ -2,16 +2,25 @@ const mongoose = require("mongoose");
 
 const notificationSchema = mongoose.Schema(
   {
-    contactId: {
+    clt_name: {
       type: String,
     },
-
-    contactType:{
-       type:String,
-       enum:["CUSTOMER","PARTNER"]
+    vehicle: {
+      type: String,
     },
-   
-    isview: {
+    service: {
+      type: String,
+    },
+    vehiclename: {
+      type: String,
+    },
+    number: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },  
+    isView: {
       type: Boolean,
       default: false,
     },
@@ -19,7 +28,9 @@ const notificationSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Blog", notificationSchema);
+
+
+module.exports = mongoose.model("Notification", notificationSchema);
 
 
 

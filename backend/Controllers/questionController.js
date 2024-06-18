@@ -10,9 +10,9 @@ const {
 module.exports.create = async (req, res, next) => {
   console.log("you hit the create pateint route", req.body);
   try {
-    const { question, answer, aboutId } = req.body;
+    const { question, answer } = req.body;
 
-    let data = { question, answer, aboutId  };
+    let data = { question, answer  };
    
     const newData = await Question.create(data);
 

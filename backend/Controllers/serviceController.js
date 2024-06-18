@@ -142,8 +142,8 @@ module.exports.update = async (req, res, next) => {
 
   try {
     const existing = await Serivces.findById(req.params.id);
-    const { heading,subHeading, content,aboutId } = req.body;
-    const data = {heading,subHeading, content,aboutId };
+    const { heading,subHeading, content } = req.body;
+    const data = {heading,subHeading, content};
     if (req.file) {
       console.log("user updating the image");
       await deleteFile(existing.imageUrl);

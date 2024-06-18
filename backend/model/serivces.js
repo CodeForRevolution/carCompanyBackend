@@ -10,6 +10,7 @@ const servicesSchema = mongoose.Schema(
     aboutId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'About' 
+        
     },
     content: {
       type: String,

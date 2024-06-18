@@ -6,7 +6,7 @@ console.log("your file",process.env.PORT)
 const bodyParser=require("body-parser")
 const cookieParser =require("cookie-parser");
 const cors=require("cors")
-  const allowedOrigins = ['https://www.khanclinics.in', 'https://khanclinic.vercel.app','http://localhost:3000' ]; // setting list of origin that can request in server
+  const allowedOrigins ="*"; // setting list of origin that can request in server
   app.use(cors({
     origin: allowedOrigins,
     credentials: true,

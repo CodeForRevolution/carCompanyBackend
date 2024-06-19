@@ -1,11 +1,10 @@
 
 
 const Notification=require("../model/notification");
+const mail=require('../utils/triggerMail')
 
 
 
-const image = require("../model/image");
-const notification = require("../model/notification");
 
 module.exports.create = async (req, res, next) => {
   console.log("you hit the create notification route", req.body);
@@ -15,6 +14,24 @@ module.exports.create = async (req, res, next) => {
     let data = req.body;
    
     const notification = await Notification.create(data);
+
+    let emailData = {
+      clt_name:data.clt_name,
+      vehicle: data.vehicle,
+      location: data.location,
+      number: data.number,
+      vehiclename: data.vehiclename,
+      service: data.service,
+      email:"shakir973019@gmail.com",
+      OTP: 12345,
+      subject: `CONTACT REQUEST bY ${data.clt_name}`,
+      // verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
+      companyLogo:
+        "https://garragewala.in/assets/images/img/logo123.png",
+      template: "contact.html",
+      // url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+    };
+    mail.sendForgetMail(req, emailData);
 
    return res.status(201).json({
       data: notification,

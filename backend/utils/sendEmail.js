@@ -32,6 +32,5 @@ try {
  console.log('your error',error) 
 }
 
-
 };
 module.exports=sendEmail;

@@ -1,6 +1,6 @@
-const fs = require('fs');
-let nodemailer = require('nodemailer');
-let handlebars = require('handlebars');
+const fs = require('fs').promises; // Use fs.promises for async file operations
+const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
 const path = require('path');
 
 const transporter = nodemailer.createTransport({
@@ -14,54 +14,40 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// to read the template
-let readHTMLFile = (path, callback) => {
-  fs.readFile(
-    path,
-    {
-      encoding: 'utf-8',
-    },
-    (err, html) => {
-      if (err) {
-        throw err;
-        callback(err);
-      } else {
-        callback(null, html);
-      }
-    }
-  );
+// Function to read HTML file and return promise
+const readHTMLFile = (filePath) => {
+  return fs.readFile(filePath, { encoding: 'utf-8' });
 };
 
-exports.sendForgetMail = (req, data) => {
-  let mailOptions = {
-    from: `${process.env.EMAIL_SEND_ID}`,
-    to: null,
-    subject: data.subject,
-    text: null,
-    html: null,
-    attachments:null,
-  };
+// Function to send email using Handlebars template
+exports.sendForgetMail = async (req, data) => {
+  try {
+    // Read the HTML template file and compile it using Handlebars
+    const html = await readHTMLFile(path.join(__dirname, `templates/${data.template}`));
+    
+    const template = handlebars.compile(html);
+    const replacements = {
+      clt_name: data.clt_name,
+      vehicle: data.vehicle,
+      location: data.location,
+      number: data.number,
+      vehiclename: data.vehiclename,
+      service: data.service,
+      companyLogo: data.companyLogo,
+    };
 
-  readHTMLFile(`${__dirname}/templates/${data.template}`, async (err, html) => {
-    let template = handlebars.compile(html);
-    let replacements = data;
-    mailOptions.html = template(replacements);
-    // mailOptions.subject = 'Forget Password';
-    mailOptions.to = data.email;
-    triggerMail(mailOptions);
-  });
-};
+    const mailOptions = {
+      from: process.env.EMAIL_SEND_ID,
+      to: data.email,
+      subject: data.subject,
+      html: template(replacements),
+    };
 
-const triggerMail = (mailOptions) => {
-
-
-  console.log("your transporter is ",transporter)
-
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log("Error while sending the Email",err);
-    } else {
-      console.log('Email sent');
-    }
-  });
+    // Send the email using Nodemailer transporter
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent v2:', info.response);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
 };

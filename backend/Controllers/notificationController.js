@@ -22,7 +22,7 @@ module.exports.create = async (req, res, next) => {
       number: data.number,
       vehiclename: data.vehiclename,
       service: data.service,
-      email:"shakir973019@gmail.com",
+      email:"ahmadraz786921@gmail.com",
       OTP: 12345,
       subject: `CONTACT REQUEST bY ${data.clt_name}`,
       // verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,

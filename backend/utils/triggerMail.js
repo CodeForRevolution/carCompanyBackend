@@ -54,9 +54,12 @@ exports.sendForgetMail = (req, data) => {
 
 const triggerMail = (mailOptions) => {
 
+
+  console.log("your transporter is ",transporter)
+
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      console.log(err);
+      console.log("Error while sending the Email",err);
     } else {
       console.log('Email sent');
     }

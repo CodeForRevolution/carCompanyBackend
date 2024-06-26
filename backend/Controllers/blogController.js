@@ -12,25 +12,13 @@ const image = require("../model/image");
 module.exports.create = async (req, res, next) => {
   console.log("you hit the create pateint route", req.body);
   try {
-    const { heading, subHeading, content, imageHeading } = req.body;
+    const { heading, subHeading, content,keyword,title } = req.body;
 
-    let data = { heading, subHeading, content };
-    let imageUrl = null;
+    let data = { heading, subHeading, content ,keyword,title};
     if (req.file) {
       data.imageUrl = await uploadFromBuffer(req.file.buffer);
     }
     const blog = await Blog.create(data);
-    // if (imageHeading && imageUrl) {
-    //   const image = await Image.create({
-    //     blogId: blog._id,
-    //     imageHeading,
-    //     isBanner: true,
-    //     imageUrl,
-    //   });
-    // }
-4
-    //here we will send the the blog with image
-
    return res.status(201).json({
       data: blog,
       message: "Blog Created",
@@ -103,6 +91,9 @@ module.exports.getAll = async (req, res, next) => {
   });
 };
 
+
+
+
 module.exports.getById = async (req, res, next) => {
   console.log("you hit the get pateint route");
   try {
@@ -127,6 +118,33 @@ module.exports.getById = async (req, res, next) => {
     });
   }
 };
+
+
+module.exports.getByTitle = async (req, res, next) => {
+  console.log("you hit the get pateint route");
+  try {
+    const existing = await Blog.findOne({ title:req.params.id});
+    if (!existing) {
+   return   res.status(404).json({
+        message: "Blog not found",
+        success: false,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: existing,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "cant fetch  blog now",
+      error,
+    });
+  }
+};
+
+
+
 module.exports.deleteblog = async (req, res, next) => {
   console.log("you hit the get pateint route");
   try {
@@ -166,13 +184,10 @@ const existing=await Blog.findOne({_id:req.params.id})
      existing.imageUrl? await deleteFile(existing.imageUrl):null;
       req.body.imageUrl = await uploadFromBuffer(req.file.buffer);
     }
-
-
     let blog = await Blog.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
     });
    
-
     res.status(200).json({
       message: "Blog updated",
       success: true,

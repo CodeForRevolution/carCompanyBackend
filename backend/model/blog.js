@@ -4,9 +4,17 @@ const blogSchema = mongoose.Schema(
     heading: {
       type: String,
     },
+    title:{
+      type:String,
+      unique: true,
+    },
+    keywords:{
+
+    },
     subHeading: {
       type: String,
     },
+
     imageUrl:{
       type:String
     },
@@ -16,4 +24,4 @@ const blogSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Blog1", blogSchema);

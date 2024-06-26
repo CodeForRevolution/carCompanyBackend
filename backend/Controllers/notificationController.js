@@ -10,6 +10,39 @@ module.exports.create = async (req, res, next) => {
   console.log("you hit the create notification route", req.body);
   try {
     
+    const {email,service,clt_name,location,number,vehiclename,notCustomer,workShopName}=req.body;
+
+    if(notCustomer){
+      const customerData={email,location,number,clt_name,workShopName,notCustomer}
+      const notification = await Notification.create(customerData);
+
+
+      let emailData = {
+        clt_name:clt_name,
+        location: location,
+        number: number,
+        cltEmail:req.body.email,
+        email:"shakir973019@gmail.com",
+        cltEmail:req.body.email,
+        workShopName: workShopName,
+        subject: `PARTNER REQUEST bY ${clt_name}`,
+        // verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
+        companyLogo:
+          "https://garragewala.com/images/logonew1.png",
+        template: "becomePartner.html",
+        // url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+      };
+
+      console.log("********what dat asending to email***********",emailData)
+      mail.sendForgetMail(req, emailData);
+
+      return res.status(201).json({
+        data: notification,
+        message: "notification Created",
+        success: true,
+      });
+
+    }
 
     let data = req.body;
    
@@ -22,12 +55,13 @@ module.exports.create = async (req, res, next) => {
       number: data.number,
       vehiclename: data.vehiclename,
       service: data.service,
-      email:"ahmadraz786921@gmail.com",
+     
+      email:"shakir973019@gmail.com",
       OTP: 12345,
       subject: `CONTACT REQUEST bY ${data.clt_name}`,
       // verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
       companyLogo:
-        "https://garragewala.in/assets/images/img/logo123.png",
+        "https://garragewala.com/images/logonew1.png",
       template: "contact.html",
       // url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
     };

@@ -5,6 +5,11 @@ const notificationSchema = mongoose.Schema(
     name: {
       type: String,
     },
+    isCustomer:{
+      type:Boolean,
+      default:true
+      
+    },
     vehicleType: {
       type: String,
     },

@@ -5,6 +5,10 @@ const notificationSchema = mongoose.Schema(
     clt_name: {
       type: String,
     },
+    notCustomer:{
+         type:Boolean,
+         default:false,
+    },
     vehicle: {
       type: String,
     },
@@ -13,6 +17,9 @@ const notificationSchema = mongoose.Schema(
     },
     vehiclename: {
       type: String,
+    },
+    workShopName:{
+         type:String,
     },
     number: {
       type: String,
@@ -27,8 +34,6 @@ const notificationSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-
-
 
 module.exports = mongoose.model("Notification", notificationSchema);
 

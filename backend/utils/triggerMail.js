@@ -29,6 +29,7 @@ exports.sendForgetMail = async (req, data) => {
     const replacements = {
       clt_name: data.clt_name,
       vehicle: data.vehicle,
+      cltEmail: data.cltEmail,
       location: data.location,
       number: data.number,
       vehiclename: data.vehiclename,

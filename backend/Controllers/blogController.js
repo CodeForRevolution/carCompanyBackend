@@ -12,9 +12,9 @@ const image = require("../model/image");
 module.exports.create = async (req, res, next) => {
   console.log("you hit the create pateint route", req.body);
   try {
-    const { heading, subHeading, content,keyword,title } = req.body;
+    const { heading, subHeading, content,keywords,title } = req.body;
 
-    let data = { heading, subHeading, content ,keyword,title};
+    let data = { heading, subHeading, content ,keywords,title};
     if (req.file) {
       data.imageUrl = await uploadFromBuffer(req.file.buffer);
     }
